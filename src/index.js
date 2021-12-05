@@ -12,12 +12,12 @@ app.use(cors())
 app.get('/', (req, res) => {
   const width = 1024
   const height = 350
-  const padding = 50
+  const padding = 15
   const color = '#666'
   const img = canvas.createCanvas(width, height)
   const ctx = img.getContext('2d')
 
-  drawLine(ctx, padding, width, height)
+  drawLine(ctx, padding, width, height, color)
   drawLabels()
 
   respondWithImage(res, img)
