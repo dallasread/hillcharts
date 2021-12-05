@@ -7,15 +7,15 @@ const port = process.env.PORT || 3000
 
 app.use(cors())
 
-const buildImage = () => {
+const buildImage = (q) => {
   const image = canvas.createCanvas(200, 200)
   const ctx = image.getContext('2d')
 
   ctx.font = '30px Times'
   ctx.rotate(0.1)
-  ctx.fillText('Hillcharts!', 50, 100)
+  ctx.fillText(q, 50, 100)
 
-  const text = ctx.measureText('Hillcharts!')
+  const text = ctx.measureText(q)
   ctx.strokeStyle = 'rgba(0,0,0,0.5)'
   ctx.beginPath()
   ctx.lineTo(50, 102)
