@@ -11,12 +11,10 @@ const buildImage = () => {
   const image = canvas.createCanvas(200, 200)
   const ctx = image.getContext('2d')
 
-  // Write "Awesome!"
-  ctx.font = '30px Impact'
+  ctx.font = '30px Times'
   ctx.rotate(0.1)
   ctx.fillText('Hillcharts!', 50, 100)
 
-  // Draw line under text
   const text = ctx.measureText('Hillcharts!')
   ctx.strokeStyle = 'rgba(0,0,0,0.5)'
   ctx.beginPath()
