@@ -26,7 +26,7 @@ const buildImage = () => {
 }
 
 app.get('/', (req, res) => {
-  const img = buildImage()
+  const img = buildImage(req.query.q || 'Nothing supplied')
 
   res.writeHead(200, {
     'Content-Type': 'image/png',
