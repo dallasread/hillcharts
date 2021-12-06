@@ -20,7 +20,7 @@ const priorLabelsWithSimilarValue = (labels, label, value) => {
     if (key === label) {
       found = true
     } else if (found) {
-      if (Math.abs(parseInt(labels[key]) - value) < 10) {
+      if (Math.abs(rangify(parseInt(labels[key])) - value) < 10) {
         similar += 1
       }
     }
@@ -29,15 +29,21 @@ const priorLabelsWithSimilarValue = (labels, label, value) => {
   return similar
 }
 
-const addLabel = (ctx, padding, width, height, labelPadding, labels, text, value, color) => {
-  const textHeight = height / 18
-  ctx.font = `bold ${textHeight}px Helvetica`
-
+const rangify = (value) => {
   if (value > 90) {
     value = 90
   } else if (value < 10) {
     value = 10
   }
+
+  return value
+}
+
+const addLabel = (ctx, padding, width, height, labelPadding, labels, text, value, color) => {
+  const textHeight = height / 18
+  ctx.font = `bold ${textHeight}px Helvetica`
+
+  value = rangify(value)
 
   const textWidth = ctx.measureText(text).width
   const coords = {
