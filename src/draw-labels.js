@@ -12,7 +12,24 @@ const getXOffset = (padding, width, height, value) => {
   }
 }
 
-const addLabel = (ctx, padding, width, height, labelPadding, text, value, color) => {
+const priorLabelsWithSimilarValue = (labels, label, value) => {
+  let found = false
+  let similar = 0
+
+  for (const key in labels) {
+    if (key === label) {
+      found = true
+    } else if (found) {
+      if (Math.abs(parseInt(labels[key]) - value) < 10) {
+        similar += 1
+      }
+    }
+  }
+
+  return similar
+}
+
+const addLabel = (ctx, padding, width, height, labelPadding, labels, text, value, color) => {
   const textHeight = height / 18
   ctx.font = `bold ${textHeight}px Helvetica`
 
@@ -28,17 +45,18 @@ const addLabel = (ctx, padding, width, height, labelPadding, text, value, color)
     y: Math.max((
       (height - labelPadding) - ((height * ((value ^ 3) * 2) / 100))
     ) * (value > 50 ? -1 : 1), padding),
-    xOffset: getXOffset(padding, width, height, value) || 0
+    xOffset: getXOffset(padding, width, height, value) || 0,
+    yOffset: priorLabelsWithSimilarValue(labels, text, value) * (textHeight * -2)
   }
 
   ctx.textAlign = coords.align
   ctx.textBaseline = 'middle'
 
   ctx.fillStyle = color
-  ctx.fillRect(coords.x - (textWidth / 2) - labelPadding + coords.xOffset, coords.y - (textHeight / 2) - labelPadding, textWidth + (labelPadding * 2), textHeight + (labelPadding * 2))
+  ctx.fillRect(coords.x - (textWidth / 2) - labelPadding + coords.xOffset, coords.y - (textHeight / 2) - labelPadding + coords.yOffset, textWidth + (labelPadding * 2), textHeight + (labelPadding * 2))
 
   ctx.fillStyle = 'white'
-  ctx.fillText(text, coords.x + coords.xOffset, coords.y)
+  ctx.fillText(text, coords.x + coords.xOffset, coords.y + coords.yOffset)
 }
 
 export default (ctx, labels, padding, width, height, labelPadding) => {
@@ -52,6 +70,6 @@ export default (ctx, labels, padding, width, height, labelPadding) => {
   ctx.globalAlpha = 1.0
 
   for (const label in labels) {
-    addLabel(ctx, padding, width, height, labelPadding, label, parseInt(labels[label]), chooseColor())
+    addLabel(ctx, padding, width, height, labelPadding, labels, label, parseInt(labels[label]), chooseColor())
   }
 }
