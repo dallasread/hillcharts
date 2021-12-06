@@ -35,7 +35,7 @@ const getCoordinates = (padding, width, height, value) => {
 }
 
 const addLabel = (ctx, padding, width, height, labelPadding, text, value, color) => {
-  const textHeight = height / 22
+  const textHeight = height / 18
   ctx.font = `bold ${textHeight}px`
 
   const textWidth = ctx.measureText(text).width
