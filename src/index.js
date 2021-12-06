@@ -12,9 +12,10 @@ const app = express()
 app.use(cors())
 
 app.get('/', (req, res) => {
-  const width = 1024
-  const height = 350
-  const padding = 50
+  const width = 1440
+  const height = 480
+  const padding = 20
+  const labelPadding = 10
   const color = '#666'
   const dividerAlpha = 0.65
 
@@ -24,7 +25,7 @@ app.get('/', (req, res) => {
   drawHill(ctx, padding, width, height, color)
   drawDivider(ctx, padding, width, height, color, dividerAlpha)
   drawDividerWords(ctx, padding, width, height, color, dividerAlpha)
-  drawLabels(req.query)
+  drawLabels(ctx, req.query, padding, width, height, labelPadding)
 
   respondWithImage(res, img)
 })
