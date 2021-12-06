@@ -1,4 +1,4 @@
-const colors = ['#35c9f6', '#803bc7']
+const colors = ['#FF7875', '#5ABBCA', '#C384C0', '#F7C164', '#777BB3']
 
 const getCoordinates = (padding, width, height, value) => {
   if (value === 0) {
