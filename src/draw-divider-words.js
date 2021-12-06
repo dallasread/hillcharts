@@ -1,7 +1,7 @@
 export default (ctx, padding, width, height, color, alpha) => {
   const placement = Math.PI
 
-  ctx.font = `${height / 18}px`
+  ctx.font = `${height / 16}px`
   ctx.fillStyle = color
   ctx.globalAlpha = alpha
   ctx.textAlign = 'center'
