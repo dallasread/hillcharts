@@ -14,7 +14,7 @@ app.use(cors())
 app.get('/', (req, res) => {
   const width = 1440
   const height = 480
-  const padding = 20
+  const padding = 30
   const labelPadding = 10
   const color = '#666'
   const dividerAlpha = 0.65
