@@ -25,6 +25,12 @@ const getCoordinates = (padding, width, height, value) => {
       y: height / 2,
       align: 'center'
     }
+  } else if (value === 100) {
+    return {
+      x: width,
+      y: height - padding,
+      align: 'right'
+    }
   } else {
     return {
       x: 0,
@@ -35,8 +41,8 @@ const getCoordinates = (padding, width, height, value) => {
 }
 
 const addLabel = (ctx, padding, width, height, labelPadding, text, value, color) => {
-  const textHeight = height / 16
-  ctx.font = `bold ${textHeight}px`
+  const textHeight = height / 18
+  ctx.font = `bold ${textHeight}px Helvetica`
 
   const textWidth = ctx.measureText(text).width
   const coords = getCoordinates(padding, width, height, value)
