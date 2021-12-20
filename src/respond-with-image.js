@@ -1,6 +1,4 @@
-export default (res, img) => {
-  const content = img.toBuffer()
-
+export default (res, content) => {
   res.writeHead(200, {
     'Content-Type': 'image/png',
     'Content-Length': content.length
