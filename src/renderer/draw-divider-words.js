@@ -1,7 +1,7 @@
 export default (ctx, padding, imageWidth, imageHeight, color, alpha) => {
   const placement = Math.PI
 
-  ctx.font = `${imageHeight / 20}px Helvetica`
+  ctx.font = `${imageHeight / 20}px Arial`
   ctx.fillStyle = color
   ctx.globalAlpha = alpha
   ctx.textAlign = 'center'

@@ -38,7 +38,7 @@ const findClosestAvailableBoundingBox = (preferredBoundingBox, boundingBoxes, sp
 
 const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, label, boundingBoxes) => {
   const textHeight = imageHeight / 20
-  ctx.font = `${textHeight}px Helvetica`
+  ctx.font = `${textHeight}px Arial`
 
   const textWidth = ctx.measureText(label.text).width
   const width = textWidth + (labelPadding * 2)
