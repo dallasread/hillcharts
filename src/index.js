@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     imageWidth: 1440,
     imageHeight: 480,
     imagePadding: 50,
-    labelPadding: 10,
+    labelPadding: 7,
     hillColor: '#666',
     dividerAlpha: 0.65
   }))
