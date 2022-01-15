@@ -1,4 +1,12 @@
-const COLORS = ['#FF7875', '#5ABBCA', '#C384C0', '#F7C164', '#777BB3']
+const COLORS = [
+  '#FF7875',
+  '#5ABBCA',
+  '#C384C0',
+  '#777BB3',
+  '#0071BC',
+  '#18c694',
+  '#ee9c53'
+]
 
 class ColorGenerator {
   constructor () {
