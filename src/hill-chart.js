@@ -31,7 +31,7 @@ class HillChart {
     drawHill(ctx, options.imagePadding, options.imageWidth, options.imageHeight, options.hillColor)
     drawDivider(ctx, options.imagePadding, options.imageWidth, options.imageHeight, options.hillColor, options.dividerAlpha)
     drawDividerWords(ctx, options.imagePadding, options.imageWidth, options.imageHeight, options.hillColor, options.dividerAlpha)
-    drawLabels(ctx, this.labels, options.imagePadding, options.imageWidth, options.imageHeight, options.labelPadding)
+    drawLabels(ctx, this.labels, options.imagePadding, options.imageWidth, options.imageHeight, options.labelPadding, options.labelSpacing)
 
     return img.toBuffer()
   }

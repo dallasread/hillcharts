@@ -22,21 +22,21 @@ const calcPreferredX = (imageWidth, label) => {
   return imageWidth * percentage
 }
 
-const findClosestAvailableBoundingBox = (preferredBoundingBox, boundingBoxes, spacing, height) => {
-  spacing *= -1 // Add to the top first
+const findClosestAvailableBoundingBox = (preferredBoundingBox, boundingBoxes, labelSpacing) => {
+  labelSpacing *= -1 // Add to the top first
 
   while (preferredBoundingBox.collidesAny(boundingBoxes)) {
-    if (spacing < 0 && preferredBoundingBox.top - spacing < 0) {
-      spacing *= -1 // Add to the bottom later
+    if (labelSpacing < 0 && preferredBoundingBox.top - labelSpacing < 0) {
+      labelSpacing *= -1 // Add to the bottom later
     }
 
-    preferredBoundingBox = BoundingBox.offset(preferredBoundingBox, 0, spacing)
+    preferredBoundingBox = BoundingBox.offset(preferredBoundingBox, 0, labelSpacing)
   }
 
   return preferredBoundingBox
 }
 
-const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, label, boundingBoxes) => {
+const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, labelSpacing, label, boundingBoxes) => {
   const lineOffset = 5 // Heroku doesn't like to middle-ify the font
   const textHeight = imageHeight / 20
   ctx.font = `${textHeight}px Arial`
@@ -49,7 +49,7 @@ const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, la
   const preferredY = calcPreferredY(imageHeight, imagePadding, labelPadding, label)
   const preferredBoundingBox = BoundingBox.fromCenter(preferredX, preferredY, width, height)
 
-  const boundingBox = findClosestAvailableBoundingBox(preferredBoundingBox, boundingBoxes, labelPadding)
+  const boundingBox = findClosestAvailableBoundingBox(preferredBoundingBox, boundingBoxes, labelSpacing)
   const boundingBoxCenter = boundingBox.center()
 
   ctx.fillStyle = label.color
@@ -62,14 +62,14 @@ const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, la
   return boundingBox
 }
 
-const drawLabels = (ctx, labels, imagePadding, imageWidth, imageHeight, labelPadding) => {
+const drawLabels = (ctx, labels, imagePadding, imageWidth, imageHeight, labelPadding, labelSpacing) => {
   const boundingBoxes = []
 
   ctx.globalAlpha = 1.0
 
   roundedLabelValue(labels).forEach((label) => {
     boundingBoxes.push(
-      placeLabel(ctx, imagePadding, imageWidth, imageHeight, labelPadding, label, boundingBoxes)
+      placeLabel(ctx, imagePadding, imageWidth, imageHeight, labelPadding, labelSpacing, label, boundingBoxes)
     )
   })
 }
