@@ -1,12 +1,12 @@
-export default (ctx, padding, width, height, color, alpha) => {
+export default (ctx, padding, imageWidth, imageHeight, color, alpha) => {
   const placement = Math.PI
 
-  ctx.font = `${height / 18}px Arial`
+  ctx.font = `${imageHeight / 20}px Helvetica`
   ctx.fillStyle = color
   ctx.globalAlpha = alpha
   ctx.textAlign = 'center'
   ctx.textBaseline = 'bottom'
 
-  ctx.fillText('Figuring things out', (width / placement), height - padding)
-  ctx.fillText('Making things happen', (width * (placement - 1) / placement), height - padding)
+  ctx.fillText('Figuring things out', (imageWidth / placement), imageHeight - padding)
+  ctx.fillText('Making things happen', (imageWidth * (placement - 1) / placement), imageHeight - padding)
 }
