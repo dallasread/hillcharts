@@ -37,7 +37,7 @@ const findClosestAvailableBoundingBox = (preferredBoundingBox, boundingBoxes, sp
 }
 
 const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, label, boundingBoxes) => {
-  const lineOffset = 3 // Heroku doesn't like to middle-ify the font
+  const lineOffset = 5 // Heroku doesn't like to middle-ify the font
   const textHeight = imageHeight / 20
   ctx.font = `${textHeight}px Arial`
 
