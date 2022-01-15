@@ -56,6 +56,7 @@ const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, la
 
   ctx.textBaseline = 'middle'
   ctx.fillStyle = 'white'
+  ctx.lineHeight = 1
   ctx.fillText(label.text, boundingBoxCenter.x, boundingBoxCenter.y)
 
   return boundingBox
