@@ -16,10 +16,20 @@ const calcPreferredY = (imageHeight, imagePadding, labelPadding, label, labelsWi
   return Math.max(exactY, minY)
 }
 
-const calcPreferredX = (imageWidth, label) => {
+const calcPreferredX = (imageWidth, imagePadding, label, labelWidth) => {
   const percentage = label.value / 100
+  const minX = (labelWidth / 2) + (imagePadding / 2)
+  const maxX = imageWidth - (labelWidth / 2) - (imagePadding / 2)
+  const preferredX = imageWidth * percentage
+  const preferredXWithSpacing = preferredX + labelWidth + (imagePadding / 2)
 
-  return imageWidth * percentage
+  if (preferredX < minX) {
+    return minX
+  } else if (preferredXWithSpacing > maxX) {
+    return maxX
+  }
+
+  return preferredX
 }
 
 const findClosestAvailableBoundingBox = (preferredBoundingBox, boundingBoxes, labelSpacing) => {
@@ -45,7 +55,7 @@ const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, la
   const width = textWidth + (labelPadding * 2)
   const height = textHeight + (labelPadding * 2)
 
-  const preferredX = calcPreferredX(imageWidth, label)
+  const preferredX = calcPreferredX(imageWidth, imagePadding, label, width)
   const preferredY = calcPreferredY(imageHeight, imagePadding, labelPadding, label)
   const preferredBoundingBox = BoundingBox.fromCenter(preferredX, preferredY, width, height)
 
