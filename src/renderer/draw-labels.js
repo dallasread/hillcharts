@@ -1,19 +1,18 @@
-import roundedLabelValue from './rounded-label-value.js'
 import BoundingBox from './bounding-box.js'
 
-const calcPreferredY = (imageHeight, imagePadding, labelPadding, label, labelsWithSimilarValue) => {
+const calcPreferredY = (imageHeight, imagePadding, labelPadding, label, labelHeight) => {
   const minY = imagePadding
-  const overTheHillMultiplier = label.value > 50 ? -1 : 1
-  const exactY = overTheHillMultiplier * (
-    (imageHeight - labelPadding) -
-         (
-           (imageHeight * (
-             (label.value ^ 3) * 2) / 100
-           )
-         )
-  )
+  const maxY = imageHeight - imagePadding
+  const percentage = (label.value / 100) * 100
+  const preferredY = ((-0.06 * ((percentage - 50) * (percentage - 50))) / 100) * -imageHeight
 
-  return Math.max(exactY, minY)
+  if (preferredY < minY) {
+    return minY
+  } else if (preferredY > maxY) {
+    return maxY
+  }
+
+  return preferredY
 }
 
 const calcPreferredX = (imageWidth, imagePadding, label, labelWidth) => {
@@ -21,11 +20,10 @@ const calcPreferredX = (imageWidth, imagePadding, label, labelWidth) => {
   const minX = (labelWidth / 2) + (imagePadding / 2)
   const maxX = imageWidth - (labelWidth / 2) - (imagePadding / 2)
   const preferredX = imageWidth * percentage
-  const preferredXWithSpacing = preferredX + labelWidth + (imagePadding / 2)
 
   if (preferredX < minX) {
     return minX
-  } else if (preferredXWithSpacing > maxX) {
+  } else if (preferredX > maxX) {
     return maxX
   }
 
@@ -56,7 +54,7 @@ const placeLabel = (ctx, imagePadding, imageWidth, imageHeight, labelPadding, la
   const height = textHeight + (labelPadding * 2)
 
   const preferredX = calcPreferredX(imageWidth, imagePadding, label, width)
-  const preferredY = calcPreferredY(imageHeight, imagePadding, labelPadding, label)
+  const preferredY = calcPreferredY(imageHeight, imagePadding, labelPadding, label, height)
   const preferredBoundingBox = BoundingBox.fromCenter(preferredX, preferredY, width, height)
 
   const boundingBox = findClosestAvailableBoundingBox(preferredBoundingBox, boundingBoxes, labelSpacing)
@@ -77,7 +75,7 @@ const drawLabels = (ctx, labels, imagePadding, imageWidth, imageHeight, labelPad
 
   ctx.globalAlpha = 1.0
 
-  roundedLabelValue(labels).forEach((label) => {
+  labels.forEach((label) => {
     boundingBoxes.push(
       placeLabel(ctx, imagePadding, imageWidth, imageHeight, labelPadding, labelSpacing, label, boundingBoxes)
     )
