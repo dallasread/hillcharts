@@ -6,9 +6,9 @@ import drawDivider from './renderer/draw-divider.js'
 import drawDividerWords from './renderer/draw-divider-words.js'
 import drawLabels from './renderer/draw-labels.js'
 
-const SORT_BY_VALUE = (a, b) => {
-  if (a.value < b.value) { return -1 }
-  if (a.value > b.value) { return 1 }
+const SORT_BY_EXTREME_VALUE = (a, b) => {
+  if (Math.min(100 - a.value, a.value) < Math.min(100 - b.value, b.value)) { return -1 }
+  if (Math.min(100 - a.value, a.value) > Math.min(100 - b.value, b.value)) { return 1 }
   return 0
 }
 
@@ -27,7 +27,7 @@ class HillChart {
       )
     }
 
-    return labels.sort(SORT_BY_VALUE)
+    return labels.sort(SORT_BY_EXTREME_VALUE)
   }
 
   render (options) {
